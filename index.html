@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<title>Cross-Browser QRCode generator for Javascript</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="qrcode.js"></script>
+</head>
+<body>
+
+
+
+	<center style="margin-top: 15vh">
+		<h2 style="color: green"> Link Generator </h2>
+		<h3> Click the button to generate a Link </h3>
+
+		<form name="randomform">
+			<input type="button" value="Generate Link" onClick="randomString();">
+			<br><br>
+			<b><p id="randomfield" style="color: red; margin-bottom: 50px;"> </p></b>
+		</form>
+		
+		<h2 style="color: green"> QR Code Generator </h2>
+		
+		<input id="text" type="text" value="https://dakhilaldtaxgovbd.github.io/dakhila-print/" style="width:80%" /><br />
+		<div id="qrcode" style="width:74px; height:74px; margin-top:15px;"></div>
+
+	</center>
+
+
+
+
+
+	<script type="text/javascript">
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+			width : 74,
+			height : 74
+		});
+
+		function makeCode () {		
+			var elText = document.getElementById("text");
+			
+			if (!elText.value) {
+				alert("Input a text");
+				elText.focus();
+				return;
+			}
+			
+			qrcode.makeCode(elText.value);
+		}
+
+		makeCode();
+
+		$("#text").
+			on("blur", function () {
+				makeCode();
+			}).
+			on("keydown", function (e) {
+				if (e.keyCode == 13) {
+					makeCode();
+				}
+			});
+			
+		function randomString() {
+					//define a variable consisting alphabets in small and capital letter
+			const characters = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz0123456789";
+					
+					//specify the length for the new string
+			const lenString = 32;
+			let randomstring = '';
+
+					//loop to select a new character in each iteration
+			for (let i = 0; i < lenString; i++) {
+				const rnum = Math.floor(Math.random() * characters.length);
+				randomstring += characters.charAt(rnum, rnum+1);
+			}
+
+					 //display the generated string 
+			document.getElementById("randomfield").innerHTML = randomstring;
+		}	
+	</script>
+</body>
