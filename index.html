@@ -23,11 +23,15 @@
                 </button>
             </div>
 
-            <div class="qr-code">
-                <div id="qrcode" style="width:74px; height:74px;"></div>
-            </div>            
-
-            <button type="" class="btn">Copy Image</button>
+            <div class="qr-copy-wrapper">
+                <div class="qr-code">
+                    <div id="qrcode" style="width:74px; height:74px;">
+                        
+                    </div>
+                </div>            
+    
+                <button type="" id="image-link-copy" class="btn">Copy Image</button>
+            </div>
         </form>
     </div>
 
@@ -62,6 +66,13 @@
 				}
 			});
 			
+
+
+
+
+
+
+            
 		function randomString() {
 					//define a variable consisting alphabets in small and capital letter
 			const characters = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz0123456789";
@@ -80,6 +91,8 @@
 			document.getElementById("text").value = randomstring;
 		}
 
+
+        // Link Copy Script
         document.querySelectorAll(".input-box").forEach(copyLinkContainer => {
             const inputField = copyLinkContainer.querySelector("#text");
             const copyButton = copyLinkContainer.querySelector(".copy-link-button");
@@ -96,7 +109,27 @@
                 setTimeout(() => inputField.value = text, 1000)
             });
         });
-	</script>    
 
+
+
+        // Image Url Copy 
+        const copyImageButton = document.getElementById('image-link-copy');
+        const copyImage = document.getElementsByName('img').src;
+
+        copyImageButton.onclick = function(){
+            const content = document.getElementsByTagName('img')[0].src;
+            navigator.clipboard.writeText(content);
+        }
+        
+
+
+
+
+
+
+
+
+	</script>    
+    
 </body>
 </html>
