@@ -1,34 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>Cross-Browser QRCode generator for Javascript</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-	<script type="text/javascript" src="jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script type="text/javascript" src="jquery.min.js"></script>
 	<script type="text/javascript" src="qrcode.js"></script>
 </head>
 <body>
+    
+    <div class="wrapper">
+        <form name="randomform" action="">
+            <h1>QR Code Generator</h1>
+            <div class="input-box">
+                <input id="text" type="text" placeholder="Click to Generate QR Code" onClick="randomString();" readonly>
+                <button type="button" class="copy-link-button">
+                    <i class='bx bx-link'></i>
+                </button>
+            </div>
 
+            <div class="qr-code">
+                <div id="qrcode" style="width:74px; height:74px;"></div>
+            </div>            
 
-
-	<center style="margin-top: 15vh">
-		<h2 style="color: green"> Link Generator </h2>
-		<h3> Click the button to generate a Link </h3>
-
-		<form name="randomform">
-			<input type="button" value="Generate Link" onClick="randomString();">
-			<br><br>
-			<b><p id="randomfield" style="color: red; margin-bottom: 50px;"> </p></b>
-		</form>
-		
-		<h2 style="color: green"> QR Code Generator </h2>
-		
-		<input id="text" type="text" value="https://dakhilaldtaxgovbd.github.io/dakhila-print/" style="width:80%" /><br />
-		<div id="qrcode" style="width:74px; height:74px; margin-top:15px;"></div>
-
-	</center>
-
-
+            <button type="" class="btn">Copy Image</button>
+        </form>
+    </div>
 
 
 
@@ -42,12 +43,11 @@
 			var elText = document.getElementById("text");
 			
 			if (!elText.value) {
-				alert("Input a text");
 				elText.focus();
 				return;
 			}
 			
-			qrcode.makeCode(elText.value);
+			qrcode.makeCode("https://dakhilaldtaxgovbd.github.io/dakhila-print/"+elText.value);
 		}
 
 		makeCode();
@@ -77,7 +77,26 @@
 			}
 
 					 //display the generated string 
-			document.getElementById("randomfield").innerHTML = randomstring;
-		}	
-	</script>
+			document.getElementById("text").value = randomstring;
+		}
+
+        document.querySelectorAll(".input-box").forEach(copyLinkContainer => {
+            const inputField = copyLinkContainer.querySelector("#text");
+            const copyButton = copyLinkContainer.querySelector(".copy-link-button");
+
+            inputField.addEventListener("focus", () => inputField.select());
+
+            copyButton.addEventListener("click", () => {
+                const text = inputField.value;
+
+                inputField.select();
+                navigator.clipboard.writeText(text);
+
+                inputField.value = "Copied!";
+                setTimeout(() => inputField.value = text, 1000)
+            });
+        });
+	</script>    
+
 </body>
+</html>
